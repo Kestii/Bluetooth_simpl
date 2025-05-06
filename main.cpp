@@ -26,7 +26,7 @@ void loop() {
   if(yhdistetty == true){
     Serial.println("yhdistetty laitteeseen");
   }
-  delay(1000);
-  Serial.println("täällä ollaa");
+  delay(5000);
+  ble.send_info_BLE("123456789101234567890leeeviii");
 }
 

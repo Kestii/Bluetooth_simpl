@@ -38,7 +38,9 @@ void LeeviBLE :: aloita_mainonta (const String& device_name){
     BLEDevice::init(device_name.c_str());
     pServer = BLEDevice::createServer();
     pServer->setCallbacks(new MyServerCallbacks());
-
+    //BLEDevice::setMTU(100);
+    uint16_t mtu = 128;
+    BLEDevice::setMTU(128);
     BLEService *pService = pServer->createService(SERVICE_UUID);
     pCharacteristic = pService->createCharacteristic(
                                            CHARACTERISTIC_UUID,
@@ -93,6 +95,9 @@ void LeeviBLE :: lopeta_mainonta(const String& device_name){
 
 }
 
-void LeeviBLE :: send_info_BLE(){
-    pCharacteristic->setValue("Hello World says Neil");
+void LeeviBLE :: send_info_BLE(const String& viesti){
+    if(deviceConnected){
+    pCharacteristic->setValue(viesti.c_str());
+    pCharacteristic->notify();
+    }
 }
